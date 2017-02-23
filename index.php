@@ -1,92 +1,101 @@
 <?php
 session_start();
-
-$_SESSION['deck'] = array(
-    "SA" => 1, 11,
-    "S2" => 2,
-    "S3" => 3,
-    "S4" => 3,
-    "S5" => 5,
-    "S6" => 6,
-    "S7" => 7,
-    "S8" => 8,
-    "S9" => 9,
-    "S10" =>10,
-    "SJ" => 10,
-    "SQ" => 10,
-    "SK" => 10,
-    "CA" => 1, 11,
-    "C2" => 2,
-    "C3" => 3,
-    "C4" => 3,
-    "C5" => 5,
-    "C6" => 6,
-    "C7" => 7,
-    "C8" => 8,
-    "C9" => 9,
-    "C10" =>10,
-    "CJ" => 10,
-    "CQ" => 10,
-    "CK" => 10,
-    "DA" => 1, 11,
-    "D2" => 2,
-    "D3" => 3,
-    "D4" => 3,
-    "D5" => 5,
-    "D6" => 6,
-    "D7" => 7,
-    "D8" => 8,
-    "D9" => 9,
-    "D10" =>10,
-    "DJ" => 10,
-    "DQ" => 10,
-    "DK" => 10,
-    "HA" => 1, 11,
-    "H2" => 2,
-    "H3" => 3,
-    "H4" => 3,
-    "H5" => 5,
-    "H6" => 6,
-    "H7" => 7,
-    "H8" => 8,
-    "H9" => 9,
-    "H10" =>10,
-    "HJ" => 10,
-    "HQ" => 10,
-    "HK" => 10,
-);
-
-
+$_SESSION['hand'] = [];
+function makeDeck()
+{
+    $_SESSION['deck'] = [
+        ['name' => 'Ace of Spades', 'value' => 11,],
+        ['name' => 'Two of Spades', 'value' => 2],
+        ['name' => 'Three of Spades', 'value' => 3],
+        ['name' => 'Four of Spades', 'value' => 4],
+        ['name' => 'Five of Spades', 'value' => 5],
+        ['name' => 'Six of Spades', 'value' => 6],
+        ['name' => 'Seven of Spades', 'value' => 7],
+        ['name' => 'Eight of Spades', 'value' => 8],
+        ['name' => 'Nine of Spades', 'value' => 9],
+        ['name' => 'Ten of Spades', 'value' => 10],
+        ['name' => 'Jack of Spades', 'value' => 10],
+        ['name' => 'Queen of Spades', 'value' => 10],
+        ['name' => 'King of Spades', 'value' => 10],
+        ['name' => 'Ace of Clubs', 'value' => 1, 11,],
+        ['name' => 'Two of Clubs', 'value' => 2],
+        ['name' => 'Three of Clubs', 'value' => 3],
+        ['name' => 'Four of Clubs', 'value' => 4],
+        ['name' => 'Five of Clubs', 'value' => 5],
+        ['name' => 'Six of Clubs', 'value' => 6],
+        ['name' => 'Seven of Clubs', 'value' => 7],
+        ['name' => 'Eight of Clubs', 'value' => 8],
+        ['name' => 'Nine of Clubs', 'value' => 9],
+        ['name' => 'Ten of Clubs', 'value' => 10],
+        ['name' => 'Jack of Clubs', 'value' => 10],
+        ['name' => 'Queen of Clubs', 'value' => 10],
+        ['name' => 'King of Clubs', 'value' => 10],
+        ['name' => 'Ace of Diamonds', 'value' => 11,],
+        ['name' => 'Two of Diamonds', 'value' => 2],
+        ['name' => 'Three of Diamonds', 'value' => 3],
+        ['name' => 'Four of Diamonds', 'value' => 4],
+        ['name' => 'Five of Diamonds', 'value' => 5],
+        ['name' => 'Six of Diamonds', 'value' => 6],
+        ['name' => 'Seven of Diamonds', 'value' => 7],
+        ['name' => 'Eight of Diamonds', 'value' => 8],
+        ['name' => 'Nine of Diamonds', 'value' => 9],
+        ['name' => 'Ten of Diamonds', 'value' => 10],
+        ['name' => 'Jack of Diamonds', 'value' => 10],
+        ['name' => 'Queen of Diamonds', 'value' => 10],
+        ['name' => 'King of Diamonds', 'value' => 10],
+        ['name' => 'Ace of Hearts', 'value' => 11,],
+        ['name' => 'Two of Hearts', 'value' => 2],
+        ['name' => 'Three of Hearts', 'value' => 3],
+        ['name' => 'Four of Hearts', 'value' => 4],
+        ['name' => 'Five of Hearts', 'value' => 5],
+        ['name' => 'Six of Hearts', 'value' => 6],
+        ['name' => 'Seven of Hearts', 'value' => 7],
+        ['name' => 'Eight of Hearts', 'value' => 8],
+        ['name' => 'Nine of Hearts', 'value' => 9],
+        ['name' => 'Ten of Hearts', 'value' => 10],
+        ['name' => 'Jack of Hearts', 'value' => 10],
+        ['name' => 'Queen of Hearts', 'value' => 10],
+        ['name' => 'King of Hearts', 'value' => 10],
+    ];
+}
 /*
-$_SESSION['deck'] = array(
-    'SA','S2','S3','S4','S5','S6','S7','S8','S9','S10','SJ','SQ','SK',
-    'CA','C2','C3','C4','C5','C6','C7','C8','C9','C10','CJ','CQ','CK',
-    'DA','D2','D3','D4','D5','D6','D7','D8','D9','D10','DJ','DQ','DK',
-    'HA','H2','H3','H4','H5','H6','H7','H8','H9','H10','HJ','HQ','HK', );
+if (isset($_SESSION)){
+    if(!isset($_SESSION['shuffledDeck'])){
+        shuffle($_SESSION['deck']);
+        $_SESSION['shuffledDeck'] = $_SESSION['deck'];
 
-*/
-
-$_SESSION['hand'] = array();
-
-
-function shuffleDeck(){
-    shuffle($_SESSION['deck']);
-    return $_SESSION['deck'];
-}
-
-function associateTag(){
-
-}
-
-function dealHand(){
-shuffleDeck();
-for($x=0;$x<2;$x++){
-    $_SESSION['hand'][$x]=$_SESSION['deck'][$x];
+    }
+    else{
+        var_dump ($_SESSION['shuffledDeck']);
     }
 }
+*/
+
+if(isset($_GET['action'])){
+    switch ($_GET['action']) {
+        case 'shuffle':
+            shuffle($_SESSION['deck']);
+            break;
+        case 'deal':
+            $_SESSION['deck'] = $varDeck;
+            array_push($_SESSION['hand'], $varDeck[count($varDeck-1)]);
+            array_pop($_SESSION['deck']);
+            break;
+        case 'restart':
+            break;
+        default:
+            break;
+
+    }
+
+}
 
 
+?>
+    <form action="index.php">
+        <input type="submit" value="shuffle" name="action"  />
+        <input type="submit" value="deal" name="action"  />
+        <input type="submit" value="restart" name="action"  />
 
-shuffleDeck();
-print_r($_SESSION['deck']);
-
+    </form>
+<?php
