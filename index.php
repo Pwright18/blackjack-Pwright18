@@ -99,6 +99,7 @@ if (isset($_GET['action'])) {
             $card1 = deal();
             array_push($playerHand, $card1);
             print_r($playerHand);
+            $_SESSION['playerHand'] = $playerHand;
             echo "<br/>";
             echo "<br/>";
             echo "Dealer's Hand: ";
@@ -111,12 +112,22 @@ if (isset($_GET['action'])) {
             $card1 = deal();
             array_push($dealerHand, $card1);
             print_r($dealerHand);
+            $_SESSION['dealerHand'] = $dealerHand;
             break;
         case 'Hit':
-            dealplayer();
+            $card1 = deal();
+            array_push($_SESSION['playerHand'], $card1);
+            print_r($_SESSION['playerHand']);
+            $value = 0;
+            for($x=0;$x<count($_SESSION['playerHand']); $x++){
+                $value = $value + $_SESSION['playerHand'][$x]['value'];
+            }
+            echo "<br/>";
+            echo "<br/>";
+            echo "Your hand is worth $value";
+
             break;
         case 'Pass':
-            dealComputer();
             break;
         default:
             break;
