@@ -10,7 +10,6 @@ require_once ("deck.php");
     </form>
 <?php
 
-
 array($master = [
     ['name' => 'Ace of Spades', 'value' => 11,],
     ['name' => 'Two of Spades', 'value' => 2],
@@ -79,17 +78,16 @@ function dealPlayer($who)
 }
 
 
-
 function deal(){
     $_SESSION['dealNumber']++;
     return ($_SESSION['deck'][$_SESSION['dealNumber']]);
 }
-echo "Aces will be counted as 11." . "<br/>" . "Closest to 21 Wins." . "<br/>" . "<br/>";
+echo "<strong>Aces will be counted as 11." . "<br/>" . "Closest to 21 Wins." . "<br/>" . "<br/></strong>";
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
         case 'Restart':
             session_unset();
-            echo "Your Hand: ";
+            echo "<strong><i>Your Hand: </i></strong>";
             $_SESSION['dealNumber'] = 0;
             shuffle($master);
             $_SESSION['deck'] = $master;
@@ -109,10 +107,8 @@ if (isset($_GET['action'])) {
             }
             $_SESSION['playerValue'] = $playerValue;
             echo "<br/>";
-            echo "Your hand's value is $playerValue";
+            echo "Your hand's value is <strong>$playerValue</strong>";
             echo "<br/>";
-            echo "<br/>";
-            echo "Dealer's Hand: ";
             echo "<br/>";
 
             $_SESSION['dealNumber'] = 0;
@@ -124,45 +120,109 @@ if (isset($_GET['action'])) {
             $card1 = deal();
             array_push($dealerHand, $card1);
 
+            $_SESSION['dealerHand'] = $dealerHand;
 
-            echo $dealerHand[0]['name'];
+
+            echo "<strong><i>Dealer's Hand:</i></strong>";
             echo "<br/>";
-            echo "HIDDEN";
+            echo $_SESSION['dealerHand'][0]['name'];
+            echo "<br/>";
+            echo "----HIDDEN----";
+            echo "<br/>";
+            if(isset($_SESSION['dealerHand'][2])){
+                echo $_SESSION['dealerHand'][2]['name'];
+            }
+            echo "<br/>";
+            if(isset($_SESSION['dealerHand'][3])){
+                echo $_SESSION['dealerHand'][3]['name'];
+            }
+            echo "<br/>";
+            if(isset($_SESSION['dealerHand'][4])){
+                echo $_SESSION['dealerHand'][4]['name'];
+            }
+            echo "<br/>";
+
+
+
+
+
+
+
             $dealerValue = 0;
-            for($x=0;$x<count($_SESSION['playerHand']); $x++){
-                $dealerValue = $dealerValue + $_SESSION['playerHand'][$x]['value'];
+            for($x=0;$x<count($_SESSION['dealerHand']); $x++){
+                $dealerValue = $dealerValue + $_SESSION['dealerHand'][$x]['value'];
             }
             $_SESSION['dealerValue'] = $dealerValue;
-            $_SESSION['dealerHand'] = $dealerHand;
+
             break;
         case 'Hit':
             $card1 = deal();
             array_push($_SESSION['playerHand'], $card1);
-            echo "Your Hand: ";
+            echo "<strong><i>Your Hand: </i></strong>";
             echo "<br/>";
             for($y = 0;$y<count($_SESSION['playerHand']);$y++){
                 echo $_SESSION['playerHand'][$y]['name'],"<br/>";
             }
+
+            //GET THE VALUE OF THE PLAYER HAND
+
             $playerValue = 0;
             for($x=0;$x<count($_SESSION['playerHand']); $x++){
                 $playerValue = $playerValue + $_SESSION['playerHand'][$x]['value'];
             }
             $_SESSION['playerValue'] = $playerValue;
 
+            //IF THE DEALER IS LESS THAN 17 DRAW
+
+            if ($_SESSION['dealerValue'] <17){
+                $card1 = deal();
+                array_push($_SESSION['dealerHand'], $card1);
+            }
+
+            //GET THE VALUE OF THE DEALER'S HAND
+
+            $dealerValue = 0;
+            for($x=0;$x<count($_SESSION['dealerHand']); $x++){
+                $dealerValue = $dealerValue + $_SESSION['dealerHand'][$x]['value'];
+            }
+            $_SESSION['dealerValue'] = $dealerValue;
+
+
             echo "<br/>";
-            echo "Your hand's value is $playerValue";
+            echo "Your hand's value is <strong>$playerValue</strong>";
             echo "<br/>";
             echo "<br/>";
-            echo "Dealer's Hand:";
+            echo "<strong><i>Dealer's Hand:</i></strong>";
             echo "<br/>";
             echo $_SESSION['dealerHand'][0]['name'];
             echo "<br/>";
-            echo "HIDDEN";
+            echo "----HIDDEN----";
             echo "<br/>";
+            if(isset($_SESSION['dealerHand'][2])){
+                echo $_SESSION['dealerHand'][2]['name'];
+            }
             echo "<br/>";
+            if(isset($_SESSION['dealerHand'][3])){
+                echo $_SESSION['dealerHand'][3]['name'];
+            }
             echo "<br/>";
+            if(isset($_SESSION['dealerHand'][4])){
+                echo $_SESSION['dealerHand'][4]['name'];
+            }
+            echo "<br/>";
+/*
+            for($y = 0;$y<count($_SESSION['dealerHand']);$y++){
+                echo $_SESSION['dealerHand'][$y]['name'],"<br/>";
+            }
+*/
+
+
             if ($_SESSION['playerValue'] > 21){
-                echo "You Have Lost. If you want to play again, press 'restart'";
+                echo "<strong>You have Lost. If you want to play again, press 'restart'</strong>";
+            }
+            if (($_SESSION['dealerValue'] > 21) &&($_SESSION['playerValue'] <21)){
+                    echo "<strong>You have won! If you want to play again, press 'restart'</strong>";
+
             }
 
 
@@ -170,55 +230,48 @@ if (isset($_GET['action'])) {
 
             break;
         case 'Pass':
+
+            //ECHO YOUR HAND
+            echo "<strong><i>Your Hand: </i></strong>";
+            echo "<br/>";
+            for($y = 0;$y<count($_SESSION['playerHand']);$y++){
+                echo $_SESSION['playerHand'][$y]['name'],"<br/>";
+            }
+
+            //GET YOUR PLAYER VALUE
+            $playerValue = 0;
+            for($x=0;$x<count($_SESSION['playerHand']); $x++){
+                $playerValue = $playerValue + $_SESSION['playerHand'][$x]['value'];
+            }
+            $_SESSION['playerValue'] = $playerValue;
+
+
+            //MORE ECHOING
+            echo "<br/>";
+            echo "Your hand's value is <strong>$playerValue</strong>";
+            echo "<br/>";
+            echo "<br/>";
+
+
             if($_SESSION['dealerValue'] < 17){
                 $card1 = deal();
                 array_push($_SESSION['dealerHand'], $card1);
-                echo $_SESSION['dealerHand'][0]['name'];
-                echo "<br/>";
-                echo "HIDDEN";
-                echo "<br/>";
-                echo $_SESSION['dealerHand'][2]['name'];
-                echo "<br/>";
-                if ($_SESSION['dealerValue'] >= $_SESSION['playerValue']) {
-                    echo "YOU LOSE!";
-                }
-            } else {
-                if ($_SESSION['dealerValue'] >= $_SESSION['playerValue']){
-                    echo "Dealer's hand:";
-                    echo "<br/>";
-                    echo $_SESSION['dealerHand'][0]['name'];
-                    echo "<br/>";
-                    echo $_SESSION['dealerHand'][1]['name'];;
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "Dealer's hand value: " . $_SESSION['dealerValue'];
-                    echo "<br/>";
-                    echo "Your hand value: " . $_SESSION['playerValue'];
-                    echo "<br/>";
-                    echo "<br/>";
-
-
-
-
-                    echo "YOU LOSE!";
-                    } else {
-                    echo "Dealer's Hand:";
-                    echo "<br/>";
-                    echo $_SESSION['dealerHand'][0]['name'];
-                    echo "<br/>";
-                    echo $_SESSION['dealerHand'][1]['name'];;
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "Dealer's hand value: " . $_SESSION['dealerValue'];
-                    echo "<br/>";
-                    echo "Your hand value: " . $_SESSION['playerValue'];
-                    echo "<br/>";
-                    echo "<br/>";
-                    echo "YOU WIN";
-                }
             }
 
+            echo "<strong><i>Dealer's Hand: </i></strong>";
+            echo "<br/>";
+            for($y = 0;$y<count($_SESSION['dealerHand']);$y++){
+                echo $_SESSION['dealerHand'][$y]['name'],"<br/>";
+            }
 
+            if($_SESSION['dealerValue'] >21){
+                echo "<strong>You have won! If you want to play again, press 'restart'</strong>";
+            }
+            if($_SESSION['dealerValue'] >= $_SESSION['playerValue']){
+                echo "<strong>You have Lost. If you want to play again, press 'restart'</strong>";
+            } else {
+                echo "<strong>You have won! If you want to play again, press 'restart'</strong>";
+            }
             break;
         default:
             break;
