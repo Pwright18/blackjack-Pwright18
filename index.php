@@ -143,11 +143,6 @@ if (isset($_GET['action'])) {
             echo "<br/>";
 
 
-
-
-
-
-
             $dealerValue = 0;
             for($x=0;$x<count($_SESSION['dealerHand']); $x++){
                 $dealerValue = $dealerValue + $_SESSION['dealerHand'][$x]['value'];
